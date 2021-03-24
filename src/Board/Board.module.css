@@ -13,10 +13,10 @@
     display: inline-block;
 }
 
-.snake-cell{
+.snakeCell{
     background-color: green;
 }
 
-.food-cell{
+.foodCell{
     background-color: red;
 }
