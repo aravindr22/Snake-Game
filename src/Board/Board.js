@@ -1,7 +1,8 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import {
     randomIntFromIntervals,
-    useInterval
+    useInterval,
+    reverseLinkedList
 } from '../lib/utils';
 
 import classes from './Board.module.css';
@@ -21,7 +22,7 @@ class LinkedList{
     }
 }
 
-const BOARD_SIZE = 10;
+const BOARD_SIZE = 15;
 
 const Direction = {
     UP: 'UP',
@@ -51,6 +52,7 @@ const Board = () => {
     const [foodCell, setFoodCell] = useState(snake.head.value.value);
     const [snakeCells, setsnakeCells] = useState(new Set([snake.head.value.value]));
     const [direction, setDirection] = useState(Direction.RIGHT);
+    const [foodShouldReverseDirection, setFoodShouldReverseDirection] = useState(false);
 
     useEffect(() => {
         window.addEventListener('keydown', e => {
@@ -60,7 +62,7 @@ const Board = () => {
 
     useInterval(() => {
         moveSnake();
-    }, 250);
+    }, 150);
 
     const handleKeydown = e => {
         const newDirection = getDirectionFromKey(e.key);
@@ -109,7 +111,8 @@ const Board = () => {
         const foodConsumed = nextHeadCell === foodCell;
         if(foodConsumed){
             growSnake(newSnakeCells);
-            handleFoodConsumption(newSnakeCells)
+            if(foodShouldReverseDirection) reverseSnake();
+            handleFoodConsumption(newSnakeCells);
         }
             
         setsnakeCells(newSnakeCells);
@@ -140,7 +143,11 @@ const Board = () => {
             if(newSnakeCells.has(nextFoodCell) || foodCell === nextFoodCell) continue;
             break;
         }
+
+        const nextFoodShouldReverseDirection = Math.random() < 0.25;
+
         setScore(() => score + 1);
+        setFoodShouldReverseDirection(nextFoodShouldReverseDirection);
         setFoodCell(nextFoodCell);
     }
 
@@ -153,17 +160,28 @@ const Board = () => {
         setDirection(Direction.RIGHT);
     }
 
+    const reverseSnake = () => {
+        const tailNextNodeDirection = getNextNodeDirection(snake.tail, direction);
+        const newDirection = getOppositeDirection(tailNextNodeDirection);
+        setDirection(newDirection);
+
+        reverseLinkedList(snake.tail);
+        const snakeHead = snake.head;
+        snake.head = snake.tail;
+        snake.tail = snakeHead;
+    }
+
     return (
         <Fragment>
             <h1>Score: {score}</h1>
-            <button onClick={moveSnake}>Move</button>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
                     <div key={rowIndex} className={classes.row}>
                         {row.map((cellValue, cellIndex) => {
                             let cellClasses = [classes.cell];
                             if(snakeCells.has(cellValue)) cellClasses.push(classes.snakeCell);
-                            if(cellValue === foodCell) cellClasses.push(classes.foodCell)                
+                            if(cellValue === foodCell && foodShouldReverseDirection) cellClasses.push(classes.reverseCell)
+                            if(cellValue === foodCell) cellClasses.push(classes.foodCell);             
                             return(
                                 <div 
                                     key={cellIndex} 
