@@ -1,5 +1,8 @@
 import React, {useState, useEffect, Fragment} from 'react';
-import {randomIntFromIntervals} from '../lib/utils';
+import {
+    randomIntFromIntervals,
+    useInterval
+} from '../lib/utils';
 
 import classes from './Board.module.css';
 
@@ -26,7 +29,7 @@ class Cell {
     }
 }
 
-const BOARD_SIZE = 15;
+const BOARD_SIZE = 12;
 
 const Direction = {
     UP: 'UP',
@@ -35,13 +38,26 @@ const Direction = {
     LEFT: 'LEFT'
 };
 
+const getStartingSnakeLLValue = board => {
+    const rowSize = board.length;
+    const colSize = board[0].length;
+    const startingRow = Math.round(rowSize/3);
+    const startingCol = Math.round(colSize/3);
+    const startingCell = board[startingRow][startingCol];
+    return {
+        row: startingRow,
+        col: startingCol,
+        value: startingCell
+    };
+}
+
 const Board = () => {
 
     const [score, setScore] = useState(0); 
     const [board, setBoard] = useState(createBoard(BOARD_SIZE));
-    const [snakeCells, setsnakeCells] = useState(new Set([44]));
-    const [foodCell, setFoodCell] = useState(48);
-    const [snake, setSnake] = useState(new LinkedList(new Cell(4, 3, 44)));
+    const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
+    const [foodCell, setFoodCell] = useState(snake.head.value.value);
+    const [snakeCells, setsnakeCells] = useState(new Set([snake.head.value.value]));
     const [direction, setDirection] = useState(Direction.RIGHT);
 
     useEffect(() => {
@@ -50,8 +66,11 @@ const Board = () => {
         });
     }, []);
 
+    useInterval(() => {
+        moveSnake();
+    }, 250);
+
     const handleKeydown = e => {
-        console.warn(e.key);
         const newDirection = getDirectionFromKey(e.key);
         const isValidDirection =  newDirection !== '';
         if(!isValidDirection) return;
@@ -65,43 +84,48 @@ const Board = () => {
             row: snake.head.value.row,
             col: snake.head.value.col
         }
-        console.log(currentHeadCoords);
         
-        const nextHeadCoords = getNextHeadCoords(currentHeadCoords, direction);
+        const nextHeadCoords = getCoordsInDirection(currentHeadCoords, direction);
         if(isOUtOfBounds(nextHeadCoords, direction)){
+            handleGameOver();
             return;
         }
         const nextHeadCell = board[nextHeadCoords.row][nextHeadCoords.col];
         if(snakeCells.has(nextHeadCell)){
+            handleGameOver();
             return;
         }
 
-        const foodConsumed = nextHeadCell === foodCell;
-        if(foodConsumed) handleFoodConsumption();
-
+        
         const newHead = new LinkListNode({
             row: nextHeadCoords.row, 
             col: nextHeadCoords.col, 
             value: nextHeadCell
         });
-
+        
         const currentHead = snake.head;
         snake.head = newHead;
         currentHead.next = newHead;
-
+        
         const newSnakeCells = new Set(snakeCells);
         newSnakeCells.delete(snake.tail.value.value);
         newSnakeCells.add(nextHeadCell);
+        
+        snake.tail = snake.tail.next;
+        if(snake.tail === null) snake.tail = snake.head;
 
-        if(!foodConsumed){
-            snake.tail = snake.tail.next;
-            if(snake.tail === null) snake.tail = snake.head;
+        const foodConsumed = nextHeadCell === foodCell;
+        if(foodConsumed){
+            growSnake(newSnakeCells);
+            handleFoodConsumption(newSnakeCells)
+        } else {
+            setsnakeCells(newSnakeCells);
         }
-
+            
         setsnakeCells(newSnakeCells);
     }
 
-    const growSnake = () => {
+    const growSnake = newSnakeCells => {
         const growthNodeCoords = getGrowthNodeCoords(snake.tail, direction);
         if(isOUtOfBounds(growthNodeCoords, board)) return;
 
@@ -115,10 +139,9 @@ const Board = () => {
         snake.tail = newTail;
         snake.tail.next = currentTail;
         
-        const newSnakeCells = new Set(snakeCells);
         newSnakeCells.add(newTailCell);
 
-        setsnakeCells(newSnakeCells);
+        
     }
 
     const getNextHeadCoords = (currentHeadCoords, direction) => {
@@ -140,7 +163,7 @@ const Board = () => {
                 col: currentHeadCoords.col
             };
         }
-        if(direction === Direction.UP){
+        if(direction === Direction.LEFT){
             return {
                 row: currentHeadCoords.row,
                 col: currentHeadCoords.col - 1
@@ -160,11 +183,20 @@ const Board = () => {
         setFoodCell(nextFoodCell);
     }
 
+    const handleGameOver = () => {
+        setScore(0);
+        const snakeLLStartingValue = getStartingSnakeLLValue(board);
+        setSnake(new LinkedList(snakeLLStartingValue));
+        console.log(snakeLLStartingValue)
+        setFoodCell(snakeLLStartingValue.value + 5);
+        setsnakeCells(new Set([snakeLLStartingValue.cell]));
+        setDirection(Direction.RIGHT);
+    }
+
     return (
         <Fragment>
             <h1>Score: {score}</h1>
             <button onClick={moveSnake}>Move</button>
-            <button onClick={growSnake}>Grow Snake</button>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
                     <div key={rowIndex} className={classes.row}>
@@ -188,15 +220,12 @@ const Board = () => {
 
 const getGrowthNodeCoords = ( snakeTail, currentDirection ) => {
     const tailNextNodeDirection = getNextNodeDirection(snakeTail, currentDirection);
-    console.log(tailNextNodeDirection);
     const growthDirection = getOppositeDirection(tailNextNodeDirection);
     const currentTailCoords = {
         row: snakeTail.value.row,
         col: snakeTail.value.col
     };
-    console.log(currentTailCoords); 
     const growthNodeCoords = getCoordsInDirection(currentTailCoords, growthDirection);
-    console.log(growthNodeCoords);
     return growthNodeCoords;
 }
 
@@ -277,7 +306,7 @@ const getDirectionFromKey = key => {
     if(key === 'ArrowUp') return Direction.UP;
     if(key === 'ArrowDown') return Direction.DOWN;
     if(key === 'ArrowRight') return Direction.RIGHT;
-    if(key === 'ArroLeft') return Direction.LEFT;
+    if(key === 'ArrowLeft') return Direction.LEFT;
     return '';
 }
 
