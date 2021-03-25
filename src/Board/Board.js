@@ -47,31 +47,30 @@ const getStartingSnakeLLValue = board => {
 const Board = () => {
 
     const [score, setScore] = useState(0); 
-    const [board, setBoard] = useState(createBoard(BOARD_SIZE));
+    const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
     const [foodCell, setFoodCell] = useState(snake.head.value.value);
     const [snakeCells, setsnakeCells] = useState(new Set([snake.head.value.value]));
     const [direction, setDirection] = useState(Direction.RIGHT);
     const [foodShouldReverseDirection, setFoodShouldReverseDirection] = useState(false);
+    const [start, setstart] = useState(false);
 
     useEffect(() => {
         window.addEventListener('keydown', e => {
-            handleKeydown(e);
+            const newDirection = getDirectionFromKey(e.key);
+            const isValidDirection =  newDirection !== '';
+            if(!isValidDirection) return;
+            const snakeWillRunIntoItself = getOppositeDirection(newDirection) === direction && snakeCells.size > 1;
+            if(snakeWillRunIntoItself) return;
+            setDirection(newDirection);
         });
-    }, []);
+    }, [direction, snakeCells]);
 
     useInterval(() => {
-        moveSnake();
+        if(start){
+            moveSnake();
+        }
     }, 150);
-
-    const handleKeydown = e => {
-        const newDirection = getDirectionFromKey(e.key);
-        const isValidDirection =  newDirection !== '';
-        if(!isValidDirection) return;
-        const snakeWillRunIntoItself = getOppositeDirection(newDirection) === direction && snakeCells.size > 1;
-        if(snakeWillRunIntoItself) return;
-        setDirection(newDirection);
-    }
 
     function moveSnake() {
         const currentHeadCoords = {
@@ -144,7 +143,7 @@ const Board = () => {
             break;
         }
 
-        const nextFoodShouldReverseDirection = Math.random() < 0.25;
+        const nextFoodShouldReverseDirection = Math.random() < 0.2;
 
         setScore(() => score + 1);
         setFoodShouldReverseDirection(nextFoodShouldReverseDirection);
@@ -158,6 +157,7 @@ const Board = () => {
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
+        setstart(false);
     }
 
     const reverseSnake = () => {
@@ -174,6 +174,7 @@ const Board = () => {
     return (
         <Fragment>
             <h1>Score: {score}</h1>
+            <button onClick={() => setstart(true)}>Start</button>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
                     <div key={rowIndex} className={classes.row}>
@@ -181,7 +182,7 @@ const Board = () => {
                             let cellClasses = [classes.cell];
                             if(snakeCells.has(cellValue)) cellClasses.push(classes.snakeCell);
                             if(cellValue === foodCell && foodShouldReverseDirection) cellClasses.push(classes.reverseCell)
-                            if(cellValue === foodCell) cellClasses.push(classes.foodCell);             
+                            else if(cellValue === foodCell) cellClasses.push(classes.foodCell);             
                             return(
                                 <div 
                                     key={cellIndex} 
