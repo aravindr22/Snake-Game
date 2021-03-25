@@ -21,15 +21,7 @@ class LinkedList{
     }
 }
 
-class Cell {
-    constructor(row, col, value){
-        this.row = row;
-        this.col = col;
-        this.value = value;
-    }
-}
-
-const BOARD_SIZE = 12;
+const BOARD_SIZE = 10;
 
 const Direction = {
     UP: 'UP',
@@ -86,7 +78,7 @@ const Board = () => {
         }
         
         const nextHeadCoords = getCoordsInDirection(currentHeadCoords, direction);
-        if(isOUtOfBounds(nextHeadCoords, direction)){
+        if(isOUtOfBounds(nextHeadCoords, board)){
             handleGameOver();
             return;
         }
@@ -118,8 +110,6 @@ const Board = () => {
         if(foodConsumed){
             growSnake(newSnakeCells);
             handleFoodConsumption(newSnakeCells)
-        } else {
-            setsnakeCells(newSnakeCells);
         }
             
         setsnakeCells(newSnakeCells);
@@ -139,44 +129,15 @@ const Board = () => {
         snake.tail = newTail;
         snake.tail.next = currentTail;
         
-        newSnakeCells.add(newTailCell);
-
-        
+        newSnakeCells.add(newTailCell); 
     }
 
-    const getNextHeadCoords = (currentHeadCoords, direction) => {
-        if(direction === Direction.UP){
-            return {
-                row: currentHeadCoords.row - 1,
-                col: currentHeadCoords.col
-            };
-        }
-        if(direction === Direction.RIGHT){
-            return {
-                row: currentHeadCoords.row,
-                col: currentHeadCoords.col + 1
-            };
-        }
-        if(direction === Direction.DOWN){
-            return {
-                row: currentHeadCoords.row + 1,
-                col: currentHeadCoords.col
-            };
-        }
-        if(direction === Direction.LEFT){
-            return {
-                row: currentHeadCoords.row,
-                col: currentHeadCoords.col - 1
-            };
-        }
-    }
-
-    const handleFoodConsumption = () => {
+    const handleFoodConsumption = newSnakeCells => {
         const maxPossibleCellValue = BOARD_SIZE * BOARD_SIZE;
         let nextFoodCell;
         while(true){
             nextFoodCell = randomIntFromIntervals(1, maxPossibleCellValue);
-            if(snakeCells.has(nextFoodCell) || foodCell === nextFoodCell) continue;
+            if(newSnakeCells.has(nextFoodCell) || foodCell === nextFoodCell) continue;
             break;
         }
         setScore(() => score + 1);
@@ -187,7 +148,6 @@ const Board = () => {
         setScore(0);
         const snakeLLStartingValue = getStartingSnakeLLValue(board);
         setSnake(new LinkedList(snakeLLStartingValue));
-        console.log(snakeLLStartingValue)
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
@@ -298,7 +258,7 @@ const createBoard = boardSize => {
 const isOUtOfBounds = (coords, board) => {
     const {row, col} = coords;
     if(row < 0 || col < 0) return true;
-    if(row >= board.legnth || col >= board[0].legnth) return true;
+    if(row >= board.length || col >= board[0].length) return true;
     return false;
 };
 
