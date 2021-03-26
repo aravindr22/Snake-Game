@@ -178,10 +178,17 @@ const Board = () => {
         snake.head = snake.tail;
         snake.tail = snakeHead;
     }
-
+    let cl = [classes.slider,classes.round];
+    let main = [classes.container, classes.themedark];
     return (
         <Fragment>
-            <h1>Score: {score}</h1>
+            <div className={main.join(' ')}>
+                <label id="switch" className={classes.switch}>
+                    <input type="checkbox"></input>       
+                    <span className={cl.join(' ')}></span>
+                </label>
+            </div>
+            <h2 style={{margin: '0 5px'}}>Score: {score}</h2>
             <button onClick={() => setstart(true)}>Start</button>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
