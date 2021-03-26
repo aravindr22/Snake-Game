@@ -178,17 +178,10 @@ const Board = () => {
         snake.head = snake.tail;
         snake.tail = snakeHead;
     }
-    let cl = [classes.slider,classes.round];
-    let main = [classes.container, classes.themedark];
+    
     return (
-        <Fragment>
-            <div className={main.join(' ')}>
-                <label id="switch" className={classes.switch}>
-                    <input type="checkbox"></input>       
-                    <span className={cl.join(' ')}></span>
-                </label>
-            </div>
-            <h2 style={{margin: '0 5px'}}>Score: {score}</h2>
+        <Fragment>            
+            <h2 className={classes.scoreTag}>Score: {score}</h2>
             <button onClick={() => setstart(true)}>Start</button>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
@@ -197,7 +190,8 @@ const Board = () => {
                             let cellClasses = [classes.cell];
                             if(snakeCells.has(cellValue)) cellClasses.push(classes.snakeCell);
                             if(cellValue === foodCell && foodShouldReverseDirection) cellClasses.push(classes.reverseCell)
-                            else if(cellValue === foodCell) cellClasses.push(classes.foodCell);             
+                            else if(cellValue === foodCell) cellClasses.push(classes.foodCell);
+                            //if(cellValue === snake.head.value) cellClasses = [classes.cell, classes.head]
                             return(
                                 <div 
                                     key={cellIndex} 
