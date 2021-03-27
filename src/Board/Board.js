@@ -1,4 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react';
+import { connect } from 'react-redux';
+
 import {
     randomIntFromIntervals,
     useInterval,
@@ -30,7 +32,7 @@ class LinkedList{
     }
 }
 
-const BOARD_SIZE = 15;
+//const BOARD_SIZE = 15;
 
 const Direction = {
     UP: 'UP',
@@ -52,8 +54,8 @@ const getStartingSnakeLLValue = board => {
     };
 }
 
-const Board = () => {
-
+const Board = ({ BOARD_SIZE }) => {
+    console.log(BOARD_SIZE)
     const [score, setScore] = useState(0); 
     const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
@@ -217,4 +219,8 @@ const getGrowthNodeCoords = ( snakeTail, currentDirection ) => {
     return growthNodeCoords;
 }
 
-export default Board;
+const mapStateToProps = state => ({
+    BOARD_SIZE: state.board.boardSize
+});
+
+export default connect(mapStateToProps)(Board);
