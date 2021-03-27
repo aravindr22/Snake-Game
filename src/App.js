@@ -3,6 +3,10 @@ import React, {useState} from 'react';
 import Board from './Board/Board';
 import classes from './App.module.css';
 
+//Redux
+import { Provider } from 'react-redux';
+import store from './store';
+
 function App() {
   const [darkTheme, setDarkTheme] = useState(true);
 
@@ -14,15 +18,17 @@ function App() {
   }
   console.log("asd")
   return (
-    <div className={mainClasses.join(' ')}>
-      <div className={classes.container}>
-        <label id="switch" className={classes.switch}>
-          <input type="checkbox" onClick={() => setDarkTheme(!darkTheme)}></input>       
-          <span className={spanClasses.join(' ')}></span>
-        </label>
+    <Provider store={store}>
+      <div className={mainClasses.join(' ')}>
+        <div className={classes.container}>
+          <label id="switch" className={classes.switch}>
+            <input type="checkbox" onClick={() => setDarkTheme(!darkTheme)}></input>       
+            <span className={spanClasses.join(' ')}></span>
+          </label>
+        </div>
+        <Board></Board>
       </div>
-      <Board></Board>
-    </div>
+    </Provider>
   );
 }
 
