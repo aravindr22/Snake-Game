@@ -1,5 +1,5 @@
 .board{
-    outline: 2px solid rgb(134, 154, 189);
+    outline: 2px solid var(--color-accent);
 }
 
 .row{
@@ -17,6 +17,7 @@
 .scoreTag{
   margin-top: 3px;
   margin-bottom: 8px;
+  color: var(--font-color);
 }
 
 .snakeCell{

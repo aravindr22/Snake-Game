@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Board from './Board/Board';
 import classes from './App.module.css';
@@ -16,18 +17,20 @@ function App() {
   if(!darkTheme){
     mainClasses = [classes.App, classes.themelight];
   }
-  console.log("asd")
+
   return (
     <Provider store={store}>
-      <div className={mainClasses.join(' ')}>
-        <div className={classes.container}>
-          <label id="switch" className={classes.switch}>
-            <input type="checkbox" onClick={() => setDarkTheme(!darkTheme)}></input>       
-            <span className={spanClasses.join(' ')}></span>
-          </label>
+      <Router>
+        <div className={mainClasses.join(' ')}>
+          <div className={classes.container}>
+            <label id="switch" className={classes.switch}>
+              <input type="checkbox" onClick={() => setDarkTheme(!darkTheme)}></input>       
+              <span className={spanClasses.join(' ')}></span>
+            </label>
+          </div>
+          <Route exact path="/game" component={Board} />
         </div>
-        <Board></Board>
-      </div>
+      </Router>
     </Provider>
   );
 }

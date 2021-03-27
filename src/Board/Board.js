@@ -55,7 +55,6 @@ const getStartingSnakeLLValue = board => {
 }
 
 const Board = ({ BOARD_SIZE }) => {
-    console.log(BOARD_SIZE)
     const [score, setScore] = useState(0); 
     const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
@@ -183,7 +182,7 @@ const Board = ({ BOARD_SIZE }) => {
     
     return (
         <Fragment>            
-            <h2 className={classes.scoreTag}>Score: {score}</h2>
+            <h3 className={classes.scoreTag}>Score: {score}</h3>
             <button onClick={() => setstart(true)}>Start</button>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
