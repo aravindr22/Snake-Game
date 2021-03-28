@@ -168,7 +168,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
-        //stopGame();
+        stopGame();
     }
 
     const reverseSnake = () => {
@@ -190,9 +190,9 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
         <Fragment>            
             <h3 className={classes.scoreTag}>Score: {score}</h3>
             {/* <Link to="/" >back</Link> */}
-            <div className={classes.board}>
+            <div className={classes.board} >
                 {board.map((row, rowIndex) => (
-                    <div key={rowIndex} className={classes.row}>
+                    <div key={rowIndex} className={classes.row} style={{backgroundColor: '#85ff91'}}>
                         {row.map((cellValue, cellIndex) => {
                             let cellClasses = [classes.cell];
                             if(snakeCells.has(cellValue)) cellClasses.push(classes.snakeCell);
