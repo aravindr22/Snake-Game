@@ -1,14 +1,14 @@
-.root {
-    min-width: 275px,
+.float {
+    display: flex;
+    margin-top: 200px;
 }
-.bullet {
-    display: 'inline-block';
-    margin: '0 2px';
-    transform: 'scale(0.8)';
+
+.boardsize{
+    margin-top: 20px;
 }
-.title{
-    font-size: 14px;
-}
-.pos {
-    margin-bottom: 12px,
+
+.startButton{
+    color: white;
+    border: 2px solid grey;
+    width: 20px;
 }

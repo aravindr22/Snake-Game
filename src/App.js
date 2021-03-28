@@ -10,10 +10,10 @@ function App() {
 
   let mainClasses =[classes.App, classes.themedark];
 
-  let dt = localStorage.getItem('darkTheme');
-  if(dt === 'true'){
-    mainClasses = [classes.App, classes.themelight];
-  }
+  // let dt = localStorage.getItem('darkTheme');
+  // if(dt === 'true'){
+  //   mainClasses = [classes.App, classes.themelight];
+  // }
 
   return (
     <Router>
