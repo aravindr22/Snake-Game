@@ -189,7 +189,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
     return (
         <Fragment>            
             <h3 className={classes.scoreTag}>Score: {score}</h3>
-            <Link to="/" >back</Link>
+            {/* <Link to="/" >back</Link> */}
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
                     <div key={rowIndex} className={classes.row}>

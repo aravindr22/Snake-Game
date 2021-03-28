@@ -129,7 +129,7 @@ const Homepage = props => {
             <div className={hclasses.float}>
                 <Card className={classes.root}  variant='outlined'>
                     <CardContent>
-                        <Typography variant='h5' component='h2'>
+                        <Typography style={{fontSize: 30}} variant='h5' component='h2'>
                             Welcome To Snake Game!!
                         </Typography>
                         <div className={hclasses.boardsize}>
