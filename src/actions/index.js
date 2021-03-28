@@ -1,3 +1,5 @@
 export {
-    changeTheme
+    changeTheme,
+    startGame,
+    stopGame
 } from './board';

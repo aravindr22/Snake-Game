@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 import {
     randomIntFromIntervals,
@@ -14,8 +15,10 @@ import {
     getNextNodeDirection,
     createBoard
 } from './BoardHelpher';
+import * as actions from '../actions/index';
 
 import classes from './Board.module.css';
+import { Link } from 'react-router-dom';
 
 class LinkListNode{
     constructor(value){
@@ -54,7 +57,7 @@ const getStartingSnakeLLValue = board => {
     };
 }
 
-const Board = ({ BOARD_SIZE, asd }) => {
+const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
     const [score, setScore] = useState(0); 
     const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
@@ -62,7 +65,6 @@ const Board = ({ BOARD_SIZE, asd }) => {
     const [snakeCells, setsnakeCells] = useState(new Set([snake.head.value.value]));
     const [direction, setDirection] = useState(Direction.RIGHT);
     const [foodShouldReverseDirection, setFoodShouldReverseDirection] = useState(false);
-    const [start, setstart] = useState(false);
 
     useEffect(() => {
         window.addEventListener('keydown', e => {
@@ -76,10 +78,10 @@ const Board = ({ BOARD_SIZE, asd }) => {
     }, [direction, snakeCells]);
 
     useInterval(() => {
-        if(start){
+        if(startGame){
             moveSnake();
         }
-    }, 150);
+    }, gameSpeed);
 
     function moveSnake() {
         const currentHeadCoords = {
@@ -166,7 +168,7 @@ const Board = ({ BOARD_SIZE, asd }) => {
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
-        setstart(false);
+        //stopGame();
     }
 
     const reverseSnake = () => {
@@ -179,11 +181,15 @@ const Board = ({ BOARD_SIZE, asd }) => {
         snake.head = snake.tail;
         snake.tail = snakeHead;
     }
+
+    if(!startGame){
+        return <Redirect to="/" />
+    }
     
     return (
         <Fragment>            
             <h3 className={classes.scoreTag}>Score: {score}</h3>
-            <button onClick={() => setstart(true)}>Start</button>
+            <Link to="/" >back</Link>
             <div className={classes.board}>
                 {board.map((row, rowIndex) => (
                     <div key={rowIndex} className={classes.row}>
@@ -219,7 +225,15 @@ const getGrowthNodeCoords = ( snakeTail, currentDirection ) => {
 }
 
 const mapStateToProps = state => ({
-    BOARD_SIZE: state.board.boardSize
+    BOARD_SIZE: state.board.boardSize,
+    startGame: state.board.startGame,
+    gameSpeed: state.board.gameSpeed
 });
 
-export default connect(mapStateToProps)(Board);
+const mapDispatchToProps = dispatch => {
+    return {
+        stopGame: () => dispatch(actions.stopGame())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

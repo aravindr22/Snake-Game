@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react';
 import {connect} from 'react-redux';
+import { Redirect } from 'react-router';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import * as actions from '../actions/index';
 import classes2 from '../App.module.css';
 import hclasses from './Homepage.module.css';
+import board from '../reducers/board';
 
 const useStyles = makeStyles({
     root: {
@@ -46,20 +47,24 @@ const Homepage = props => {
     const [boardSize12, setboardSize12] = useState(false);
     const [boardSize15, setboardSize15] = useState(true);
     const [boardSize18, setboardSize18] = useState(false);
-    const [slow, setslow] = useState(false)
-    const [medium, setmedium] = useState(true)
-    const [high, sethigh] = useState(false)
+    const [slow, setslow] = useState(false);
+    const [medium, setmedium] = useState(true);
+    const [high, sethigh] = useState(false);
+    const [startgame, setstartgame] = useState(false)
     const classes = useStyles();
 
-    let b1 = [], b2 = [], b3 = [];
+    let b1 = [], b2 = [], b3 = [],bs;
     if(boardSize12){
         b1 = [classes.buttonHover];
+        bs = 12;
         b2 = b3 = [];
     } else if(boardSize15) {
         b2 = [classes.buttonHover];
+        bs = 15;
         b1 = b3 = [];
     } else if(boardSize18) {
         b3 = [classes.buttonHover];
+        bs = 18;
         b2 = b1 = [];
     }
 
@@ -79,15 +84,18 @@ const Homepage = props => {
         }
     }
 
-    let s=[],m=[],h=[];
+    let s=[],m=[],h=[],gs;
     if(slow){
         s = [classes.buttonHover];
+        gs = 200;
         m = h = [];
     } else if(medium) {
         m = [classes.buttonHover];
+        gs = 150
         s = h = [];
     } else if(high) {
         h = [classes.buttonHover];
+        gs = 100;
         s = m = [];
     }
 
@@ -107,8 +115,17 @@ const Homepage = props => {
         }
     }
 
+    const startButton = () => {
+        setstartgame(true);
+        props.startGame(bs,gs);
+    }
+
+    if(startgame){
+        return <Redirect to="/game/" />
+    }
+
     return (
-        <Fragment>            
+        <Fragment>       
             <div className={hclasses.float}>
                 <Card className={classes.root}  variant='outlined'>
                     <CardContent>
@@ -133,6 +150,7 @@ const Homepage = props => {
                         </div>
                         <div className={hclasses.boardsize}>
                             <Button 
+                                onClick={() => startButton()}
                                 variant="outlined" 
                                 style={{
                                     color: 'white',
@@ -151,7 +169,8 @@ const Homepage = props => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeTheme: () => dispatch(actions.changeTheme())
+        changeTheme: () => dispatch(actions.changeTheme()),
+        startGame: (bs, gs) => dispatch(actions.startGame(bs,gs))
     }
 }
 

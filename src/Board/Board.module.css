@@ -1,14 +1,15 @@
 .board{
+    margin-top: 30px;
     outline: 2px solid var(--color-accent);
 }
 
 .row{
-    height: 40px;
+    height: 35px;
 }
 
 .cell{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     /* outline: 1px solid rgb(134, 154, 189); */
     border-radius: 50%;
     display: inline-block;
@@ -17,6 +18,7 @@
 .scoreTag{
   margin-top: 3px;
   margin-bottom: 8px;
+  font-size: 45px;
   color: var(--font-color);
 }
 
