@@ -1,0 +1,3 @@
+export {
+    changeTheme
+} from './board';

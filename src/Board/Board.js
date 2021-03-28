@@ -54,7 +54,7 @@ const getStartingSnakeLLValue = board => {
     };
 }
 
-const Board = ({ BOARD_SIZE }) => {
+const Board = ({ BOARD_SIZE, asd }) => {
     const [score, setScore] = useState(0); 
     const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));

@@ -1,38 +1,31 @@
-import React, {useState} from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Board from './Board/Board';
+import Homepage from './Homepage/Homepage';
 import classes from './App.module.css';
 
-//Redux
-import { Provider } from 'react-redux';
-import store from './store';
+function App({ darkTheme }) {
 
-function App() {
-  const [darkTheme, setDarkTheme] = useState(true);
-
-  let spanClasses = [classes.slider,classes.round];
   let mainClasses =[classes.App, classes.themedark];
 
-  if(!darkTheme){
+  if(darkTheme){
     mainClasses = [classes.App, classes.themelight];
   }
 
   return (
-    <Provider store={store}>
-      <Router>
-        <div className={mainClasses.join(' ')}>
-          <div className={classes.container}>
-            <label id="switch" className={classes.switch}>
-              <input type="checkbox" onClick={() => setDarkTheme(!darkTheme)}></input>       
-              <span className={spanClasses.join(' ')}></span>
-            </label>
-          </div>
-          <Route exact path="/game" component={Board} />
-        </div>
-      </Router>
-    </Provider>
+    <Router>
+      <div className={mainClasses.join(' ')}>          
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/game" component={Board}/>
+      </div>
+    </Router>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  darkTheme: state.board.darkTheme
+});
+
+export default connect(mapStateToProps)(App);
