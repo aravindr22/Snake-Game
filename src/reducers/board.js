@@ -10,6 +10,7 @@ const initialState = {
 export default function(state = initialState, action){
     switch(action.type){
         case CHANGE_THEME:
+            localStorage.setItem('darkTheme', !state.darkTheme)
             return {
                 ...state,
                 darkTheme: !state.darkTheme

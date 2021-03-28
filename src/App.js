@@ -6,11 +6,12 @@ import Board from './Board/Board';
 import Homepage from './Homepage/Homepage';
 import classes from './App.module.css';
 
-function App({ darkTheme }) {
+function App() {
 
   let mainClasses =[classes.App, classes.themedark];
 
-  if(darkTheme){
+  let dt = localStorage.getItem('darkTheme');
+  if(dt === 'true'){
     mainClasses = [classes.App, classes.themelight];
   }
 
