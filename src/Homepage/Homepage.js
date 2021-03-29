@@ -29,13 +29,19 @@ const useStyles = makeStyles({
         color: 'white',
         border: '2px solid grey',
         margin: 10,
-        marginLeft: 30
+        marginLeft: 40
     },
     buttonRoot2: {
         color: 'white',
         border: '2px solid grey',
         margin: 10,
         marginLeft: 30
+    },
+    buttonRoot3: {
+        color: 'white',
+        border: '2px solid grey',
+        margin: 10,
+        marginLeft: 100
     },
     buttonHover:{
         backgroundColor: '#a39f93'
@@ -49,6 +55,8 @@ const Homepage = props => {
     const [slow, setslow] = useState(false);
     const [medium, setmedium] = useState(true);
     const [high, sethigh] = useState(false);
+    const [sYes, setsYes] = useState(false);
+    const [sNo, setsNo] = useState(true);
     const [startgame, setstartgame] = useState(false)
     const classes = useStyles();
 
@@ -114,9 +122,30 @@ const Homepage = props => {
         }
     }
 
+    let sfYes = [], sfNo=[], sF;
+    if(sYes){
+        sfYes=[classes.buttonHover];
+        sF = 0.2;
+        sfNo = [];
+    } else if(sNo){
+        sfNo=[classes.buttonHover];
+        sF = 0;
+        sfYes=[];
+    }
+
+    const SfHandler = (val) => {
+        if(val === 'y'){
+            setsYes(true);
+            setsNo(false);
+        } else if(val === 'n'){
+            setsYes(false);
+            setsNo(true);
+        }
+    }
+
     const startButton = () => {
         setstartgame(true);
-        props.startGame(bs,gs);
+        props.startGame(bs,gs,sF);
     }
 
     if(startgame){
@@ -148,6 +177,13 @@ const Homepage = props => {
                             </ButtonGroup>
                         </div>
                         <div className={hclasses.boardsize}>
+                            <span>Special Fruit: </span>
+                            <ButtonGroup className={classes.buttonRoot3} size="large"  aria-label="large outlined primary button group">
+                                <Button style={{color: 'white'}} onClick={() => SfHandler("y")} className={sfYes.join(' ')}>Yes</Button>
+                                <Button style={{color: 'white'}} onClick={() => SfHandler("n")} className={sfNo.join(' ')}>No</Button>                                
+                            </ButtonGroup>
+                        </div>
+                        <div className={hclasses.boardsize}>
                             <Button 
                                 onClick={() => startButton()}
                                 variant="outlined" 
@@ -169,7 +205,7 @@ const Homepage = props => {
 const mapDispatchToProps = dispatch => {
     return {
         changeTheme: () => dispatch(actions.changeTheme()),
-        startGame: (bs, gs) => dispatch(actions.startGame(bs,gs))
+        startGame: (bs, gs,sF) => dispatch(actions.startGame(bs,gs,sF))
     }
 }
 

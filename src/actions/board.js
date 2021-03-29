@@ -10,10 +10,11 @@ export const changeTheme = () => dispatch => {
     });
 }
 
-export const startGame = (boardS, gameS) => dispatch => {
+export const startGame = (boardS, gameS, specialF) => dispatch => {
+    console.warn(specialF)
     dispatch({
         type: START_GAME,
-        payload: {boardS, gameS}
+        payload: {boardS, gameS, specialF}
     });
 }
 

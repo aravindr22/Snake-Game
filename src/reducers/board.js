@@ -8,10 +8,11 @@ const initialState = {
     boardSize: 15,
     darkTheme: false,
     startGame: false,
-    gameSpeed: 150
+    gameSpeed: 150,
+    specialFruitFrequency: 0
 };
 
-export default function(state = initialState, action){
+export default function asd(state = initialState, action){
     const {type, payload} = action
     switch(type){
         case CHANGE_THEME:
@@ -25,7 +26,8 @@ export default function(state = initialState, action){
                 ...state,
                 startGame: true,
                 boardSize: payload.boardS,
-                gameSpeed: payload.gameS
+                gameSpeed: payload.gameS,
+                specialFruitFrequency: payload.specialF
             }
         case STOP_GAME:
             return {

@@ -56,7 +56,7 @@ const getStartingSnakeLLValue = board => {
     };
 }
 
-const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
+const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
     const [score, setScore] = useState(0); 
     const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
@@ -153,7 +153,8 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
             break;
         }
 
-        const nextFoodShouldReverseDirection = Math.random() < 0.2;
+        const nextFoodShouldReverseDirection = Math.random() < specialF;
+        console.log(nextFoodShouldReverseDirection, specialF)
 
         setScore(() => score + 1);
         setFoodShouldReverseDirection(nextFoodShouldReverseDirection);
@@ -227,7 +228,8 @@ const getGrowthNodeCoords = ( snakeTail, currentDirection ) => {
 const mapStateToProps = state => ({
     BOARD_SIZE: state.board.boardSize,
     startGame: state.board.startGame,
-    gameSpeed: state.board.gameSpeed
+    gameSpeed: state.board.gameSpeed,
+    specialF: state.board.specialFruitFrequency
 });
 
 const mapDispatchToProps = dispatch => {
