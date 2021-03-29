@@ -10,6 +10,7 @@
 .cell{
     width: 35px;
     height: 35px;
+    margin-bottom: 5px;
     /* outline: 1px solid rgb(134, 154, 189); */
     border-radius: 50%;
     /* background-color: lightgreen; */
@@ -28,11 +29,12 @@
 }
 
 .snakeCell{
-    background-color: green;
+    /* background-color: #2a81de; */
+    background-color: #2577cf;
 }
 
 .foodCell{
-    background-color: red;
+    background-color: green;
 }
 
 .reverseCell{
@@ -40,5 +42,5 @@
 }
 
 .head{
-  background-color: darkgreen;
+  background-color: #242526;
 }

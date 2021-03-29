@@ -18,7 +18,6 @@ import {
 import * as actions from '../actions/index';
 
 import classes from './Board.module.css';
-import { Link } from 'react-router-dom';
 
 class LinkListNode{
     constructor(value){
@@ -168,7 +167,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
-        stopGame();
+        //stopGame();
     }
 
     const reverseSnake = () => {
@@ -185,7 +184,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
     if(!startGame){
         return <Redirect to="/" />
     }
-    
+    let cellClasses = [classes.cell],e = "";
     return (
         <Fragment>            
             <h3 className={classes.scoreTag}>Score: {score}</h3>
@@ -194,15 +193,16 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed }) => {
                 {board.map((row, rowIndex) => (
                     <div key={rowIndex} className={classes.row} style={{backgroundColor: '#85ff91'}}>
                         {row.map((cellValue, cellIndex) => {
-                            let cellClasses = [classes.cell];
+                            cellClasses = [classes.cell];
+                            e = "";
                             if(snakeCells.has(cellValue)) cellClasses.push(classes.snakeCell);
-                            if(cellValue === foodCell && foodShouldReverseDirection) cellClasses.push(classes.reverseCell)
-                            else if(cellValue === foodCell) cellClasses.push(classes.foodCell);
-                            //if(cellValue === snake.head.value) cellClasses = [classes.cell, classes.head]
+                            if(cellValue === foodCell && foodShouldReverseDirection) e = "🍇"
+                            else if(cellValue === foodCell) e="🍎"
+                            if(cellValue === snake.head.value.value) cellClasses = [classes.cell, classes.head]
                             return(
                                 <div 
                                     key={cellIndex} 
-                                    className={cellClasses.join(' ')}>
+                                    className={cellClasses.join(' ')}>{e}
                                 </div>
                             );
                         })}

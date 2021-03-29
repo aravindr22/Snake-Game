@@ -11,9 +11,8 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 
 import * as actions from '../actions/index';
-import classes2 from '../App.module.css';
+// import classes2 from '../App.module.css';
 import hclasses from './Homepage.module.css';
-import board from '../reducers/board';
 
 const useStyles = makeStyles({
     root: {
