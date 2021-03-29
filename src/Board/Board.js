@@ -154,7 +154,6 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
         }
 
         const nextFoodShouldReverseDirection = Math.random() < specialF;
-        console.log(nextFoodShouldReverseDirection, specialF)
 
         setScore(() => score + 1);
         setFoodShouldReverseDirection(nextFoodShouldReverseDirection);
@@ -168,7 +167,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
-        //stopGame();
+        stopGame();
     }
 
     const reverseSnake = () => {
@@ -192,18 +191,19 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
             {/* <Link to="/" >back</Link> */}
             <div className={classes.board} >
                 {board.map((row, rowIndex) => (
-                    <div key={rowIndex} className={classes.row} style={{backgroundColor: '#85ff91'}}>
+                    <div key={rowIndex} className={classes.row} style={{backgroundColor: '#53d453'}}>
                         {row.map((cellValue, cellIndex) => {
                             cellClasses = [classes.cell];
                             e = "";
+                            if(cellValue%2 !==0) cellClasses.push(classes.circle)
                             if(snakeCells.has(cellValue)) cellClasses.push(classes.snakeCell);
-                            if(cellValue === foodCell && foodShouldReverseDirection) e = "🍇"
+                            else if(cellValue === foodCell && foodShouldReverseDirection) e = "🍇"
                             else if(cellValue === foodCell) e="🍎"
                             if(cellValue === snake.head.value.value) cellClasses = [classes.cell, classes.head]
                             return(
                                 <div 
                                     key={cellIndex} 
-                                    className={cellClasses.join(' ')}>{e}
+                                    className={cellClasses.join(' ')}><span className={classes.emoji}>{e}</span>
                                 </div>
                             );
                         })}

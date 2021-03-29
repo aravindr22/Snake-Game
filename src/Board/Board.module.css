@@ -1,6 +1,6 @@
 .board{
-    margin-top: 20px;
-    outline: 2px solid darkgreen;
+    margin-top: 5px;
+    outline: 5px solid black;
 }
 
 .row{
@@ -12,15 +12,21 @@
     height: 35px;
     /* margin-bottom: 5px; */
     /* outline: 1px solid rgb(134, 154, 189); */
-    border-radius: 50%;
+    /* border-radius: 50%; */
     /* background-color: lightgreen; */
-    display: inline-block;
+    /* display: inline-block; */
+    display: inline-flex;
+    flex-direction: row;
 }
 .circle{
     /* border-radius: 50%; */
-    background-color: lightgreen;
+    /* background-color: #22d622; */
+    background-color: #0bb30b;
 }
 
+.emoji{
+    margin-bottom: 10px;
+}
 .scoreTag{
   margin-top: 3px;
   margin-bottom: 8px;

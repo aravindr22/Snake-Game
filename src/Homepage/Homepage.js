@@ -63,7 +63,7 @@ const Homepage = props => {
     let b1 = [], b2 = [], b3 = [],bs;
     if(boardSize12){
         b1 = [classes.buttonHover];
-        bs = 12;
+        bs = 13;
         b2 = b3 = [];
     } else if(boardSize15) {
         b2 = [classes.buttonHover];
@@ -71,7 +71,7 @@ const Homepage = props => {
         b1 = b3 = [];
     } else if(boardSize18) {
         b3 = [classes.buttonHover];
-        bs = 18;
+        bs = 19;
         b2 = b1 = [];
     }
 
