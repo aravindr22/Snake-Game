@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 
+import classes from './Score.module.css';
+
 const Score = ({gameScore}) => {
 
     const [clickContinue, setclickContinue] = useState(false)
@@ -12,12 +14,43 @@ const Score = ({gameScore}) => {
         return <Redirect to="/" />;
     }
 
+    let data = [
+        {name: "aaa", score: 15},
+        {name: "bbb", score: 12},
+        {name: "ccc", score: 10},
+        {name: "ddd", score: 8},
+        {name: "eee", score: 5},
+    ]
+
+    let dataDisplay = data.map((element, index) => {
+        return (
+            <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{element.name}</td>
+                <td>{element.score}</td>
+            </tr>
+        )
+    });
+
     return (
         <Fragment>
             <div>
-                <h1 style={{marginTop: 5, marginBottom: 5}}>Game Over!!</h1>
-                <h3 style={{marginTop: 5}}>Your Score is: {gameScore}</h3>
+                <h2 style={{marginTop: 5, marginBottom: 5, fontSize: 45}}>Game Over!!</h2>
+                <h4 style={{marginTop: 8, marginBottom: 15}}>Your Score is: {gameScore}</h4>
+                <h5 style={{marginTop: 55, marginBottom: 15, fontSize: 20}}>Best 5 Score of All Time</h5>
             </div>
+            <table className={classes.customers}>
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {dataDisplay}
+                </tbody>
+            </table>
             <Button
                 onClick={() => setclickContinue(true)}
                 variant="outlined" 
@@ -25,7 +58,9 @@ const Score = ({gameScore}) => {
                     color: 'white',
                     border: '2px solid grey',
                     width: 130,
-                    height: 45
+                    height: 45,
+                    marginTop: 20,
+                    marginLeft: 40
                 }}
                 >Continue</Button>
         </Fragment>
