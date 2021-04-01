@@ -7,9 +7,9 @@
 
 [ ] - Score
     [x] - Display Score
-    [ ] - Display Table
-        [ ] - using static value
-        [ ] - get from redux
+    [x] - Display Table
+        [x] - using static value
+        [x] - get from redux
     [ ] - Get new name
         [ ] -Display A model
     [ ] - update Table

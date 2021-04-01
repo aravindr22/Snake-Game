@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import classes from './Score.module.css';
 
-const Score = ({gameScore}) => {
+const Score = ({gameScore, scores}) => {
 
     const [clickContinue, setclickContinue] = useState(false)
 
@@ -14,15 +14,7 @@ const Score = ({gameScore}) => {
         return <Redirect to="/" />;
     }
 
-    let data = [
-        {name: "aaa", score: 15},
-        {name: "bbb", score: 12},
-        {name: "ccc", score: 10},
-        {name: "ddd", score: 8},
-        {name: "eee", score: 5},
-    ]
-
-    let dataDisplay = data.map((element, index) => {
+    let dataDisplay = scores.map((element, index) => {
         return (
             <tr key={index}>
                 <td>{index + 1}</td>
@@ -68,7 +60,8 @@ const Score = ({gameScore}) => {
 };
 
 const mapStateToProps = state => ({
-    gameScore: state.board.score
+    gameScore: state.board.score,
+    scores: state.board.top5scores
 });
 
 export default connect(mapStateToProps)(Score);
