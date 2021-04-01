@@ -1,17 +1,32 @@
 import React, { Fragment, useState } from 'react';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 import classes from './Score.module.css';
 
 const Score = ({gameScore, scores}) => {
 
-    const [clickContinue, setclickContinue] = useState(false)
+    const [clickContinue, setclickContinue] = useState(false);
+    const [open, setopen] = useState(false);
+    const [name, setname] = useState("");
 
     if(clickContinue){
         return <Redirect to="/" />;
+    }
+
+    const dialogOpenHandler = () => {
+        setopen(() => true);
+    }
+
+    const dialogCloseHandler = () => {
+        setopen(() => false);
     }
 
     let dataDisplay = scores.map((element, index) => {
@@ -24,6 +39,37 @@ const Score = ({gameScore, scores}) => {
         )
     });
 
+    let dialogBox = (
+        <Fragment>
+            <Dialog open={open} onClose={dialogCloseHandler} aria-labelledby='form-dialog-title'>
+                <DialogTitle id="dorm-dialog-title"></DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Congrats!! You've Featured Yourself in Top 5
+                    </DialogContentText>
+                    <TextField 
+                        value={name}
+                        onChange={(event) => setname(event.target.value)}
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Name"
+                        type="text"
+                        fullWidth
+                        />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={dialogCloseHandler} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={dialogCloseHandler} color="primary">
+                        Continue
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Fragment>
+    );
+
     return (
         <Fragment>
             <div>
@@ -31,6 +77,8 @@ const Score = ({gameScore, scores}) => {
                 <h4 style={{marginTop: 8, marginBottom: 15}}>Your Score is: {gameScore}</h4>
                 <h5 style={{marginTop: 55, marginBottom: 15, fontSize: 20}}>Best 5 Score of All Time</h5>
             </div>
+            <button onClick={dialogOpenHandler}>Open</button>
+            {dialogBox}
             <table className={classes.customers}>
                 <thead>
                     <tr>
