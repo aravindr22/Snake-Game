@@ -11,7 +11,8 @@
         [x] - using static value
         [x] - get from redux
     [ ] - Get new name
-        [ ] -Display A model
+        [x] -Display A model
+        [ ] -color bg change
     [ ] - update Table
     [ ] - store in db
     [ ] - retrive from db
