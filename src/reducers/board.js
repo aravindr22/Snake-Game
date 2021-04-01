@@ -9,7 +9,8 @@ const initialState = {
     darkTheme: false,
     startGame: false,
     gameSpeed: 150,
-    specialFruitFrequency: 0
+    specialFruitFrequency: 0,
+    score: 0
 };
 
 export default function asd(state = initialState, action){
@@ -27,12 +28,14 @@ export default function asd(state = initialState, action){
                 startGame: true,
                 boardSize: payload.boardS,
                 gameSpeed: payload.gameS,
-                specialFruitFrequency: payload.specialF
+                specialFruitFrequency: payload.specialF,
+                score: 0
             }
         case STOP_GAME:
             return {
                 ...state,
-                startGame: false
+                startGame: false,
+                score: payload.score
             }
 
         default:

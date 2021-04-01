@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 
-import * as actions from '../actions/index';
+import * as actions from '../../actions/index';
 // import classes2 from '../App.module.css';
 import hclasses from './Homepage.module.css';
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
       minWidth: 400,
       backgroundColor: "#2a2c2d",
       border: '2px solid grey',
-      color: '#ffffff'
+      color: '#ffffff',
     },
     title: {
       fontSize: 14,
@@ -44,7 +44,10 @@ const useStyles = makeStyles({
         marginLeft: 100
     },
     buttonHover:{
-        backgroundColor: '#a39f93'
+        backgroundColor: '#a39f93',
+        '&:hover': {
+            backgroundColor: '#a39f93'
+        }
     }
 });
 
@@ -63,11 +66,11 @@ const Homepage = props => {
     let b1 = [], b2 = [], b3 = [],bs;
     if(boardSize12){
         b1 = [classes.buttonHover];
-        bs = 13;
+        bs = 15;
         b2 = b3 = [];
     } else if(boardSize15) {
         b2 = [classes.buttonHover];
-        bs = 15;
+        bs = 17;
         b1 = b3 = [];
     } else if(boardSize18) {
         b3 = [classes.buttonHover];
@@ -163,9 +166,9 @@ const Homepage = props => {
                         <div className={hclasses.boardsize}>
                             <span>Select Board Size: </span>
                             <ButtonGroup className={classes.buttonRoot} size="large"  aria-label="large outlined primary button group">
-                                <Button style={{color: 'white'}} onClick={() => SizeChanger("b1")} className={b1.join(' ')}>12 x 12</Button>
-                                <Button style={{color: 'white'}} onClick={() => SizeChanger("b2")} className={b2.join(' ')}>15 x 15</Button>
-                                <Button style={{color: 'white'}} onClick={() => SizeChanger("b3")} className={b3.join(' ')}>18 x 18</Button>
+                                <Button style={{color: 'white'}} onClick={() => SizeChanger("b1")} className={b1.join(' ')}>15 x 15</Button>
+                                <Button style={{color: 'white'}} onClick={() => SizeChanger("b2")} className={b2.join(' ')}>17 x 17</Button>
+                                <Button style={{color: 'white'}} onClick={() => SizeChanger("b3")} className={b3.join(' ')}>19 x 19</Button>
                             </ButtonGroup>
                         </div>
                         <div className={hclasses.boardsize}>

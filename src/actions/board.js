@@ -18,8 +18,9 @@ export const startGame = (boardS, gameS, specialF) => dispatch => {
     });
 }
 
-export const stopGame = () => dispatch => {
+export const stopGame = (score) => dispatch => {
     dispatch({
-        type: STOP_GAME
+        type: STOP_GAME,
+        payload: {score}
     });
 }

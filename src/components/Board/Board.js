@@ -6,7 +6,7 @@ import {
     randomIntFromIntervals,
     useInterval,
     reverseLinkedList
-} from '../lib/utils';
+} from '../../lib/utils';
 import {
     getOppositeDirection,
     getCoordsInDirection,
@@ -15,7 +15,7 @@ import {
     getNextNodeDirection,
     createBoard
 } from './BoardHelpher';
-import * as actions from '../actions/index';
+import * as actions from '../../actions/index';
 
 import classes from './Board.module.css';
 
@@ -161,13 +161,14 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
     }
 
     const handleGameOver = () => {
+        let sc = score;
         setScore(0);
         const snakeLLStartingValue = getStartingSnakeLLValue(board);
         setSnake(new LinkedList(snakeLLStartingValue));
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
-        stopGame();
+        stopGame(sc);
     }
 
     const reverseSnake = () => {
@@ -182,7 +183,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
     }
 
     if(!startGame){
-        return <Redirect to="/" />
+        return <Redirect to="/score" />
     }
     let cellClasses = [classes.cell],e = "";
     return (
@@ -234,7 +235,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        stopGame: () => dispatch(actions.stopGame())
+        stopGame: (score) => dispatch(actions.stopGame(score))
     }
 }
 
