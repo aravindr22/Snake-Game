@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
+import Button from '@material-ui/core/Button';
 
 const Score = ({gameScore}) => {
-    console.log(gameScore)
+
+    const [clickContinue, setclickContinue] = useState(false)
+
+    if(clickContinue){
+        return <Redirect to="/" />;
+    }
+
     return (
-        <div>
-            <h1>Your Score is: {gameScore}</h1>
-            <Link to="/">Back</Link>
-        </div>
+        <Fragment>
+            <div>
+                <h1 style={{marginTop: 5, marginBottom: 5}}>Game Over!!</h1>
+                <h3 style={{marginTop: 5}}>Your Score is: {gameScore}</h3>
+            </div>
+            <Button
+                onClick={() => setclickContinue(true)}
+                variant="outlined" 
+                style={{
+                    color: 'white',
+                    border: '2px solid grey',
+                    width: 130,
+                    height: 45
+                }}
+                >Continue</Button>
+        </Fragment>
     );
 };
 
