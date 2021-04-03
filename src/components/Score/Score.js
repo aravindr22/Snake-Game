@@ -29,6 +29,17 @@ const Score = ({gameScore, scores}) => {
         setopen(() => false);
     }
 
+    const compare = ( a, b ) => {
+        if ( a.score < b.score ){
+          return 1;
+        }
+        if ( a.score > b.score ){
+          return -1;
+        }
+        return 0;
+    }
+
+    scores.sort(compare);
     let dataDisplay = scores.map((element, index) => {
         return (
             <tr key={index}>

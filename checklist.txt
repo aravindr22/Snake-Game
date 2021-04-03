@@ -14,5 +14,7 @@
         [x] -Display A model
         [ ] -color bg change
     [ ] - update Table
+        [ ] - update list
+        [x] - sort
     [ ] - store in db
     [ ] - retrive from db
