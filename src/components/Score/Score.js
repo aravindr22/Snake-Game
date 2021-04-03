@@ -24,20 +24,30 @@ const Score = ({gameScore, scores}) => {
     const dialogOpenHandler = () => {
         setopen(() => true);
     }
-
+    
     const dialogCloseHandler = () => {
         setopen(() => false);
     }
-
+    
+    const onSumbitDialog = () => {
+        scores.push({name: 'qqq', score: '3'});
+        dialogCloseHandler();
+    }
+    
+    //function to sort arry of objects
     const compare = ( a, b ) => {
         if ( a.score < b.score ){
-          return 1;
+            return 1;
         }
         if ( a.score > b.score ){
-          return -1;
+            return -1;
         }
         return 0;
     }
+    
+    // if(scores[4].score < gameScore){
+    //     dialogOpenHandler();
+    // }
 
     scores.sort(compare);
     let dataDisplay = scores.map((element, index) => {
@@ -53,30 +63,32 @@ const Score = ({gameScore, scores}) => {
     let dialogBox = (
         <Fragment>
             <Dialog open={open} onClose={dialogCloseHandler} aria-labelledby='form-dialog-title'>
-                <DialogTitle id="dorm-dialog-title"></DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Congrats!! You've Featured Yourself in Top 5
-                    </DialogContentText>
-                    <TextField 
-                        value={name}
-                        onChange={(event) => setname(event.target.value)}
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Name"
-                        type="text"
-                        fullWidth
-                        />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={dialogCloseHandler} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={dialogCloseHandler} color="primary">
-                        Continue
-                    </Button>
-                </DialogActions>
+                <div style={{backgroundColor: '#2a2c2d'}}>
+                    <DialogTitle id="dorm-dialog-title"></DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{color: 'white'}}>
+                            Congrats!! You've Featured Yourself in Top 5
+                        </DialogContentText>
+                        <TextField 
+                            value={name}
+                            onChange={(event) => setname(event.target.value)}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Name"
+                            type="text"
+                            fullWidth
+                            />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={dialogCloseHandler} style={{color: 'white'}}>
+                            Cancel
+                        </Button>
+                        <Button onClick={onSumbitDialog} style={{color: 'white'}}>
+                            Continue
+                        </Button>
+                    </DialogActions>
+                </div>
             </Dialog>
         </Fragment>
     );
