@@ -1,7 +1,8 @@
 import {
     CHANGE_THEME,
     START_GAME,
-    STOP_GAME
+    STOP_GAME, 
+    SCORE_UPDATE
 } from '../actions/types';
 
 const initialState = {
@@ -24,7 +25,6 @@ export default function asd(state = initialState, action){
     const {type, payload} = action
     switch(type){
         case CHANGE_THEME:
-            localStorage.setItem('darkTheme', !state.darkTheme)
             return {
                 ...state,
                 darkTheme: !state.darkTheme
@@ -43,6 +43,13 @@ export default function asd(state = initialState, action){
                 ...state,
                 startGame: false,
                 score: payload.score
+            }
+
+        case SCORE_UPDATE:
+            console.log("re")
+            return {
+                ...state,
+                top5scores: payload.scores
             }
 
         default:

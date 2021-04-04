@@ -1,5 +1,6 @@
 export {
     changeTheme,
     startGame,
-    stopGame
+    stopGame,
+    saveTop5Scores
 } from './board';

@@ -9,9 +9,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
+import {saveTop5Scores} from '../../actions/index';
 import classes from './Score.module.css';
 
-const Score = ({gameScore, scores}) => {
+const Score = ({gameScore, scores, saveTop5Scores}) => {
 
     const [clickContinue, setclickContinue] = useState(false);
     const [open, setopen] = useState(false);
@@ -42,6 +43,7 @@ const Score = ({gameScore, scores}) => {
         scores.push({name: name, score: gameScore});
         console.log(scores)
         scores.sort(compare)
+        saveTop5Scores(scores);
         dialogCloseHandler();
     }
     
@@ -147,4 +149,4 @@ const mapStateToProps = state => ({
     scores: state.board.top5scores
 });
 
-export default connect(mapStateToProps)(Score);
+export default connect(mapStateToProps, {saveTop5Scores})(Score);

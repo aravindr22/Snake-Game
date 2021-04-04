@@ -1,7 +1,8 @@
 import {
     CHANGE_THEME,
     START_GAME,
-    STOP_GAME
+    STOP_GAME,
+    SCORE_UPDATE
 } from '../actions/types';
 
 export const changeTheme = () => dispatch => {
@@ -22,5 +23,13 @@ export const stopGame = (score) => dispatch => {
     dispatch({
         type: STOP_GAME,
         payload: {score}
+    });
+}
+
+export const saveTop5Scores = (scores) => dispatch => {
+    console.log("ac")
+    dispatch({
+        type: SCORE_UPDATE,
+        payload: {scores}
     });
 }
