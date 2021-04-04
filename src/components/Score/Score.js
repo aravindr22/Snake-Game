@@ -19,7 +19,7 @@ const Score = ({gameScore, scores, saveTop5Scores}) => {
     const [name, setname] = useState("");
 
     useEffect(() => {
-        if(scores[4].score < gameScore){
+        if(scores[scores.length - 1].score < gameScore){
             dialogOpenHandler();
         }
     }, []);
@@ -37,11 +37,8 @@ const Score = ({gameScore, scores, saveTop5Scores}) => {
     }
     
     const onSumbitDialog = () => {
-        //scores.push({name: 'qqq', score: '3'});
-        console.log(name, gameScore)
         scores.pop();
         scores.push({name: name, score: gameScore});
-        console.log(scores)
         scores.sort(compare)
         saveTop5Scores(scores);
         dialogCloseHandler();
@@ -57,10 +54,6 @@ const Score = ({gameScore, scores, saveTop5Scores}) => {
         }
         return 0;
     }
-    
-    // if(scores[4].score < gameScore){
-    //     dialogOpenHandler();
-    // }
 
     scores.sort(compare);
     let dataDisplay = scores.map((element, index) => {

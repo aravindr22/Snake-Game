@@ -27,7 +27,6 @@ export const stopGame = (score) => dispatch => {
 }
 
 export const saveTop5Scores = (scores) => dispatch => {
-    console.log("ac")
     dispatch({
         type: SCORE_UPDATE,
         payload: {scores}

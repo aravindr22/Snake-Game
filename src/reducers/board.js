@@ -13,11 +13,11 @@ const initialState = {
     specialFruitFrequency: 0,
     score: 0,
     top5scores: [
-        {name: "aaa", score: 1},
-        {name: "bbb", score: 2},
         {name: "ccc", score: 10},
         {name: "ddd", score: 8},
         {name: "eee", score: 5},
+        {name: "bbb", score: 2},
+        {name: "aaa", score: 1},
     ]
 };
 
@@ -46,7 +46,6 @@ export default function asd(state = initialState, action){
             }
 
         case SCORE_UPDATE:
-            console.log("re")
             return {
                 ...state,
                 top5scores: payload.scores
