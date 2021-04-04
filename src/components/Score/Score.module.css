@@ -22,3 +22,7 @@
     background-color: var(--color-grey);
     color: white;
 }
+
+.dialog {
+    color: white;
+}

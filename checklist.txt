@@ -1,6 +1,6 @@
 [ ] - Board
     [x] - Game
-    [ ] - Board size Broadaming
+    [ ] - Board size Broadaning
 
 [x] - Home Page
     [x] - Show options
@@ -15,6 +15,7 @@
         [ ] -color bg change
     [ ] - update Table
         [ ] - update list
+        [ ] - store in redux
         [x] - sort
     [ ] - store in db
     [ ] - retrive from db

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
@@ -17,6 +17,12 @@ const Score = ({gameScore, scores}) => {
     const [open, setopen] = useState(false);
     const [name, setname] = useState("");
 
+    useEffect(() => {
+        if(scores[4].score < gameScore){
+            dialogOpenHandler();
+        }
+    }, []);
+
     if(clickContinue){
         return <Redirect to="/" />;
     }
@@ -30,7 +36,12 @@ const Score = ({gameScore, scores}) => {
     }
     
     const onSumbitDialog = () => {
-        scores.push({name: 'qqq', score: '3'});
+        //scores.push({name: 'qqq', score: '3'});
+        console.log(name, gameScore)
+        scores.pop();
+        scores.push({name: name, score: gameScore});
+        console.log(scores)
+        scores.sort(compare)
         dialogCloseHandler();
     }
     
@@ -73,6 +84,7 @@ const Score = ({gameScore, scores}) => {
                             value={name}
                             onChange={(event) => setname(event.target.value)}
                             autoFocus
+                            color="primary"
                             margin="dense"
                             id="name"
                             label="Name"
