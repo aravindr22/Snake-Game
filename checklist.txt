@@ -13,9 +13,9 @@
     [ ] - Get new name
         [x] -Display A model
         [ ] -color bg change
-    [ ] - update Table
-        [ ] - update list
-        [ ] - store in redux
+    [x] - update Table
+        [x] - update list
+        [x] - store in redux
         [x] - sort
     [ ] - store in db
     [ ] - retrive from db

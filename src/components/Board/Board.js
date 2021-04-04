@@ -168,7 +168,7 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
         setFoodCell(snakeLLStartingValue.value + 5);
         setsnakeCells(new Set([snakeLLStartingValue.cell]));
         setDirection(Direction.RIGHT);
-        stopGame(sc);
+        //stopGame(sc);
     }
 
     const reverseSnake = () => {

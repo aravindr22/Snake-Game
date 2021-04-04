@@ -12,13 +12,15 @@ const initialState = {
     gameSpeed: 150,
     specialFruitFrequency: 0,
     score: 0,
-    top5scores: [
-        {name: "ccc", score: 10},
-        {name: "ddd", score: 8},
-        {name: "eee", score: 5},
-        {name: "bbb", score: 2},
-        {name: "aaa", score: 1},
-    ]
+    scoreFirebaseId: null,
+    top5scores: null
+    // top5scores: [
+    //     {name: "ccc", score: 10},
+    //     {name: "ddd", score: 8},
+    //     {name: "eee", score: 5},
+    //     {name: "bbb", score: 2},
+    //     {name: "aaa", score: 1},
+    // ]
 };
 
 export default function asd(state = initialState, action){
