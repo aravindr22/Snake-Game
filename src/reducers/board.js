@@ -13,14 +13,14 @@ const initialState = {
     specialFruitFrequency: 0,
     score: 0,
     scoreFirebaseId: null,
-    top5scores: null
-    // top5scores: [
-    //     {name: "ccc", score: 10},
-    //     {name: "ddd", score: 8},
-    //     {name: "eee", score: 5},
-    //     {name: "bbb", score: 2},
-    //     {name: "aaa", score: 1},
-    // ]
+    //top5scores: null
+    top5scores: [
+        {name: "ccc", score: 10},
+        {name: "ddd", score: 8},
+        {name: "eee", score: 5},
+        {name: "bbb", score: 2},
+        {name: "aaa", score: 1},
+    ]
 };
 
 export default function asd(state = initialState, action){
@@ -32,6 +32,7 @@ export default function asd(state = initialState, action){
                 darkTheme: !state.darkTheme
             }
         case START_GAME:
+            console.log(payload.data)
             return {
                 ...state,
                 startGame: true,

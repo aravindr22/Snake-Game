@@ -1,3 +1,5 @@
+import axios from '../axios-base';
+
 import {
     CHANGE_THEME,
     START_GAME,
@@ -12,7 +14,6 @@ export const changeTheme = () => dispatch => {
 }
 
 export const startGame = (boardS, gameS, specialF) => dispatch => {
-    console.warn(specialF)
     dispatch({
         type: START_GAME,
         payload: {boardS, gameS, specialF}
@@ -20,6 +21,11 @@ export const startGame = (boardS, gameS, specialF) => dispatch => {
 }
 
 export const stopGame = (score) => dispatch => {
+    // axios.get('/score.json')
+    //     .then(response => {
+    //     }).catch(error => {
+    //         console.warn(error)
+    //     });
     dispatch({
         type: STOP_GAME,
         payload: {score}
