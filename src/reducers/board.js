@@ -2,17 +2,18 @@ import {
     CHANGE_THEME,
     START_GAME,
     STOP_GAME, 
-    SCORE_UPDATE
+    SCORE_UPDATE,
+    SCORE_SETUP
 } from '../actions/types';
 
 const initialState = {
-    boardSize: 15,
+    boardSize: 17,
     darkTheme: false,
     startGame: false,
     gameSpeed: 150,
     specialFruitFrequency: 0,
     score: 0,
-    scoreFirebaseId: null,
+    scoreFirebaseId: "",
     loading: false,
     top5scores: [
         {name: "ccc", score: 10},
@@ -47,13 +48,17 @@ export default function asd(state = initialState, action){
                 score: payload.score,
                 loading: true
             }
-
-        case SCORE_UPDATE:
+        case SCORE_SETUP:
             return {
                 ...state,
                 top5scores: payload.scores,
                 scoreFirebaseId: payload.id,
                 loading: false
+            }
+        case SCORE_UPDATE:
+            return {
+                ...state,
+                top5scores: payload.scores,
             }
 
         default:

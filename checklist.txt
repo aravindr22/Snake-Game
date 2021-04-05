@@ -18,4 +18,4 @@
         [x] - store in redux
         [x] - sort
     [ ] - store in db
-    [ ] - retrive from db
+    [x] - retrive from db
