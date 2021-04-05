@@ -21,15 +21,21 @@ export const startGame = (boardS, gameS, specialF) => dispatch => {
 }
 
 export const stopGame = (score) => dispatch => {
-    // axios.get('/score.json')
-    //     .then(response => {
-    //     }).catch(error => {
-    //         console.warn(error)
-    //     });
     dispatch({
         type: STOP_GAME,
         payload: {score}
     });
+    axios.get('/score.json')
+        .then(response => {
+            let id = Object.keys(response.data)
+            let scores = response.data[id].top5scores
+            dispatch({
+                type: SCORE_UPDATE,
+                payload: {scores, id}
+            });
+        }).catch(error => {
+            console.warn(error)
+        });
 }
 
 export const saveTop5Scores = (scores) => dispatch => {

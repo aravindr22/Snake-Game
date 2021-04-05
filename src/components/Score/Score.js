@@ -9,10 +9,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
+import Spinner from '../Spinner/Spinner';
 import {saveTop5Scores} from '../../actions/index';
 import classes from './Score.module.css';
 
-const Score = ({gameScore, scores, saveTop5Scores}) => {
+const Score = ({gameScore, scores, saveTop5Scores, loading}) => {
 
     const [clickContinue, setclickContinue] = useState(false);
     const [open, setopen] = useState(false);
@@ -100,6 +101,10 @@ const Score = ({gameScore, scores, saveTop5Scores}) => {
         </Fragment>
     );
 
+    if(loading){
+        return <Spinner />
+    }
+
     return (
         <Fragment>
             <div>
@@ -139,7 +144,8 @@ const Score = ({gameScore, scores, saveTop5Scores}) => {
 
 const mapStateToProps = state => ({
     gameScore: state.board.score,
-    scores: state.board.top5scores
+    scores: state.board.top5scores,
+    loading: state.board.loading
 });
 
 export default connect(mapStateToProps, {saveTop5Scores})(Score);

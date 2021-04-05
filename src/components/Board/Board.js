@@ -17,6 +17,7 @@ import {
 } from './BoardHelpher';
 import * as actions from '../../actions/index';
 
+import Spinner from '../Spinner/Spinner';
 import classes from './Board.module.css';
 
 class LinkListNode{
@@ -56,7 +57,7 @@ const getStartingSnakeLLValue = board => {
     };
 }
 
-const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
+const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF, loading }) => {
     const [score, setScore] = useState(0); 
     const [board] = useState(createBoard(BOARD_SIZE));
     const [snake, setSnake] = useState(new  LinkedList(getStartingSnakeLLValue(board)));
@@ -185,6 +186,9 @@ const Board = ({ BOARD_SIZE, startGame, stopGame, gameSpeed, specialF }) => {
     if(!startGame){
         return <Redirect to="/score" />
     }
+    if(loading){
+        return <Spinner />
+    }
     let cellClasses = [classes.cell],e = "";
     return (
         <Fragment>            
@@ -230,7 +234,8 @@ const mapStateToProps = state => ({
     BOARD_SIZE: state.board.boardSize,
     startGame: state.board.startGame,
     gameSpeed: state.board.gameSpeed,
-    specialF: state.board.specialFruitFrequency
+    specialF: state.board.specialFruitFrequency,
+    loading: state.board.loading
 });
 
 const mapDispatchToProps = dispatch => {

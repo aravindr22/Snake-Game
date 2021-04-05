@@ -13,7 +13,7 @@ const initialState = {
     specialFruitFrequency: 0,
     score: 0,
     scoreFirebaseId: null,
-    //top5scores: null
+    loading: false,
     top5scores: [
         {name: "ccc", score: 10},
         {name: "ddd", score: 8},
@@ -32,7 +32,6 @@ export default function asd(state = initialState, action){
                 darkTheme: !state.darkTheme
             }
         case START_GAME:
-            console.log(payload.data)
             return {
                 ...state,
                 startGame: true,
@@ -45,13 +44,16 @@ export default function asd(state = initialState, action){
             return {
                 ...state,
                 startGame: false,
-                score: payload.score
+                score: payload.score,
+                loading: true
             }
 
         case SCORE_UPDATE:
             return {
                 ...state,
-                top5scores: payload.scores
+                top5scores: payload.scores,
+                scoreFirebaseId: payload.id,
+                loading: false
             }
 
         default:
