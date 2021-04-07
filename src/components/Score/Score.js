@@ -112,7 +112,6 @@ const Score = ({gameScore, scores, saveTop5Scores, loading, firbaseId}) => {
                 <h4 style={{marginTop: 8, marginBottom: 15}}>Your Score is: {gameScore}</h4>
                 <h5 style={{marginTop: 55, marginBottom: 15, fontSize: 20}}>Best 5 Score of All Time</h5>
             </div>
-            <button onClick={dialogOpenHandler}>Open</button>
             {dialogBox}
             <table className={classes.customers}>
                 <thead>
