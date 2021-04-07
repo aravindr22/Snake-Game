@@ -19,6 +19,17 @@ export const startGame = (boardS, gameS, specialF) => dispatch => {
         type: START_GAME,
         payload: {boardS, gameS, specialF}
     });
+    axios.get('/score.json')
+    .then(response => {
+        let id = Object.keys(response.data)[0]
+        let scores = response.data[id]
+        dispatch({
+            type: SCORE_SETUP,
+            payload: {scores, id}
+        });
+    }).catch(error => {
+        console.warn(error)
+    });
 }
 
 export const stopGame = (score) => dispatch => {
@@ -26,17 +37,6 @@ export const stopGame = (score) => dispatch => {
         type: STOP_GAME,
         payload: {score}
     });
-    axios.get('/score.json')
-        .then(response => {
-            let id = Object.keys(response.data)[0]
-            let scores = response.data[id]
-            dispatch({
-                type: SCORE_SETUP,
-                payload: {scores, id}
-            });
-        }).catch(error => {
-            console.warn(error)
-        });
 }
 
 export const saveTop5Scores = (scores, firbaseId) => dispatch => {

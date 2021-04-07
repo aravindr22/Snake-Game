@@ -46,7 +46,6 @@ export default function asd(state = initialState, action){
                 ...state,
                 startGame: false,
                 score: payload.score,
-                loading: true
             }
         case SCORE_SETUP:
             return {
