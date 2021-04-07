@@ -13,7 +13,7 @@ import Spinner from '../Spinner/Spinner';
 import {saveTop5Scores} from '../../actions/index';
 import classes from './Score.module.css';
 
-const Score = ({gameScore, scores, saveTop5Scores, loading}) => {
+const Score = ({gameScore, scores, saveTop5Scores, loading, firbaseId}) => {
 
     const [clickContinue, setclickContinue] = useState(false);
     const [open, setopen] = useState(false);
@@ -41,7 +41,7 @@ const Score = ({gameScore, scores, saveTop5Scores, loading}) => {
         scores.pop();
         scores.push({name: name, score: gameScore});
         scores.sort(compare)
-        saveTop5Scores(scores);
+        saveTop5Scores(scores, firbaseId);
         dialogCloseHandler();
     }
     
@@ -145,7 +145,8 @@ const Score = ({gameScore, scores, saveTop5Scores, loading}) => {
 const mapStateToProps = state => ({
     gameScore: state.board.score,
     scores: state.board.top5scores,
-    loading: state.board.loading
+    loading: state.board.loading,
+    firbaseId: state.board.scoreFirebaseId
 });
 
 export default connect(mapStateToProps, {saveTop5Scores})(Score);

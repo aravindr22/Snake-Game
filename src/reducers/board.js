@@ -58,7 +58,7 @@ export default function asd(state = initialState, action){
         case SCORE_UPDATE:
             return {
                 ...state,
-                top5scores: payload.scores,
+                top5scores: payload.score
             }
 
         default:

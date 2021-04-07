@@ -28,8 +28,8 @@ export const stopGame = (score) => dispatch => {
     });
     axios.get('/score.json')
         .then(response => {
-            let id = Object.keys(response.data)
-            let scores = response.data[id].top5scores
+            let id = Object.keys(response.data)[0]
+            let scores = response.data[id]
             dispatch({
                 type: SCORE_SETUP,
                 payload: {scores, id}
@@ -39,9 +39,19 @@ export const stopGame = (score) => dispatch => {
         });
 }
 
-export const saveTop5Scores = (scores) => dispatch => {
-    dispatch({
-        type: SCORE_UPDATE,
-        payload: {scores}
-    });
+export const saveTop5Scores = (scores, firbaseId) => dispatch => {
+    const headers = {
+        'Accept' : 'application/json',
+        'Content-Type' : 'application/json'
+    }
+    axios.put("/score/" + firbaseId + ".json",scores,headers)
+        .then(response => {
+            let score = response.data
+            dispatch({
+                type: SCORE_UPDATE,
+                payload: {score}
+            });
+        }).catch(err => {
+            console.warn(err)
+        });
 }

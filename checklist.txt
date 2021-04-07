@@ -17,5 +17,6 @@
         [x] - update list
         [x] - store in redux
         [x] - sort
-    [ ] - store in db
+    [x] - store in db
+    [ ] - update in db
     [x] - retrive from db
