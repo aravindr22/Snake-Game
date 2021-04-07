@@ -67,6 +67,12 @@ const Score = ({gameScore, scores, saveTop5Scores, loading, firbaseId}) => {
         )
     });
 
+    const styles = theme => ({
+        multilineColor:{
+            color:'white'
+        }
+    });
+
     let dialogBox = (
         <Fragment>
             <Dialog open={open} onClose={dialogCloseHandler} aria-labelledby='form-dialog-title'>
@@ -80,6 +86,9 @@ const Score = ({gameScore, scores, saveTop5Scores, loading, firbaseId}) => {
                             value={name}
                             onChange={(event) => setname(event.target.value)}
                             autoFocus
+                            inputProps={{
+                                style: {color: 'white'}
+                            }}
                             color="primary"
                             margin="dense"
                             id="name"
@@ -112,6 +121,7 @@ const Score = ({gameScore, scores, saveTop5Scores, loading, firbaseId}) => {
                 <h4 style={{marginTop: 8, marginBottom: 15}}>Your Score is: {gameScore}</h4>
                 <h5 style={{marginTop: 55, marginBottom: 15, fontSize: 20}}>Best 5 Score of All Time</h5>
             </div>
+            <button onClick={dialogOpenHandler}>Open</button>
             {dialogBox}
             <table className={classes.customers}>
                 <thead>
