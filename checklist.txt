@@ -5,18 +5,18 @@
 [x] - Home Page
     [x] - Show options
 
-[ ] - Score
+[x] - Score
     [x] - Display Score
     [x] - Display Table
         [x] - using static value
         [x] - get from redux
-    [ ] - Get new name
+    [x] - Get new name
         [x] -Display A model
-        [ ] -color bg change
+        [x] -color bg change
     [x] - update Table
         [x] - update list
         [x] - store in redux
         [x] - sort
     [x] - store in db
-    [ ] - update in db
+    [x] - update in db
     [x] - retrive from db
